@@ -1,0 +1,17 @@
+
+<!-- Default value -->
+<% article.title ||= "Demo-title" %>
+<% article.body ||= "Demo-Body" %>
+<!-- End default value -->
+
+<div class="container mt-3">
+    <div class="card mx-auto" style="width: 18rem;">
+        <div class="card-body">
+            <%= link_to article.title, article, class:"card-title h5" %>
+            <p class="card-text"><%= article.body %></p>
+
+            <%= link_to  "Edit", edit_article_path(article), class:"btn btn-primary", method: :get %>
+            <%= link_to  "Delete", article, class:"btn btn-danger", method: :delete %>
+        </div>
+    </div>
+</div>

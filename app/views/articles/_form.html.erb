@@ -1,0 +1,32 @@
+<!-- Default value -->
+<% name ||= "Demo-Action" %>
+<!-- End default value -->
+
+<div class="container">
+    <div class="row my-3">
+        <div class="col-md-5 border border-muted rounded mx-auto py-3">
+            <%= form_for @article, html: {class: "nifty_form"} do |f| %>
+                <legend><%= name %> Article</legend>
+                <div class="form-group row">
+                    <label for="article_title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <%= f.text_field :title, class:"form-control", :autofocus => true%>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="article_title" class="col-sm-2 col-form-label">Body</label>
+                    <div class="col-sm-10">
+                        <%= f.text_area :body, class:"form-control", size: "60x6" %>
+                    </div>
+                </div>
+                <%= f.submit "#{name}", class:"btn btn-primary" %>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<script>
+    <% @article.errors.full_messages.each do |error| %>
+        alertify.error('* <%= error %>');
+    <% end %>
+</script>

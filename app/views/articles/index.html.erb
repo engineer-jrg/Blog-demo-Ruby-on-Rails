@@ -1,0 +1,9 @@
+<% content_for :title do %>
+  Articles
+<% end %>
+
+<div class="container">
+    <% @articles.each do |article| %>
+        <%= render  "card_article", article: article %>
+    <% end %>
+</div>
