@@ -1,15 +1,23 @@
+<% content_for :title do %>
+  Home
+<% end %>
+
 <div class="container mt-5">
     <div class="card text-center">
         <div class="card-header">
             --- The power of RoR ---
         </div>
         <div class="card-body">
-            <h5 class="card-title">Welcome to Blog!</h5>
+            <h5 class="card-title">Welcome the Blog!</h5>
             <p class="card-text">This blog was developed with Ruby on Rails.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <% if user_signed_in? %>
+                <%= link_to  "Create a article", new_article_path, class:"btn btn-success" %>
+            <% else %>
+                <%= link_to  "Sign in for create articles", new_user_session_path, class:"btn btn-primary" %>
+            <% end %>
         </div>
         <div class="card-footer text-muted">
-            engineer.jrg@gmail.com
+            Author: engineer.jrg@gmail.com
         </div>
     </div>
 </div>

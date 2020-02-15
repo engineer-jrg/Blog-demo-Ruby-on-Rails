@@ -1,0 +1,18 @@
+<div class="col-md-4 m-2 mx-auto">
+    <div class="card w-100 h-100">
+        <% if article.cover.attached? %>
+        <%= link_to (image_tag url_for(article.thumbnail), class: "card-img-top"), article, class:"card-title h3 text-decoration-none" %>
+        <% else %>
+        <%= image_tag gravatar_image_url(article.user.email, size: 600) %>
+        <% end %>
+        <div class="card-body">
+            <%= link_to article.title, article, class:"card-title h3 text-decoration-none" %>
+            <%= Sanitize.fragment(Kramdown::Document.new(truncate(article.body, length: 100)).to_html, Sanitize::Config::RELAXED).html_safe %>
+        </div>
+        <div class="card-footer">
+            <small>Created: <%= article.created_at.to_formatted_s(:short) %></small>
+            <br>
+            <small>Updated: <%= article.updated_at.to_formatted_s(:short) %></small>
+        </div>
+    </div>
+</div>

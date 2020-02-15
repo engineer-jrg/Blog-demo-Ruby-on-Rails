@@ -2,8 +2,22 @@
   Articles
 <% end %>
 
-<div class="container">
-    <% @articles.each do |article| %>
-        <%= render  "card_article", article: article %>
-    <% end %>
+<div class="container-fluid">
+
+  <div class="row m-4">
+    <div class="col">
+      <h2 class="d-inline">Articles</h2>
+      <%= link_to  "+ Create a article", new_article_path, class:"btn btn-success ml-3" %>
+    </div>
+  </div>
+
+  <div class="row m-4">
+    <%= render @articles %>
+  </div>
+
+  <div class="row m-4">
+    <div class="col">
+      <%= will_paginate @articles, list_classes: %w(pagination justify-content-center) %>
+    </div>
+  </div>
 </div>

@@ -7,4 +7,6 @@
 
 //= require alertify
 
+//= require simplemde
+
 //= require_tree .

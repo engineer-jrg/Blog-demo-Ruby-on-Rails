@@ -24,10 +24,14 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+
+group :production do
+  gem 'pg'
+end
 
 group :test do
   gem 'sqlite3', '~> 1.4'
@@ -36,6 +40,9 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  gem "letter_opener"
+
 end
 
 group :development do
@@ -60,5 +67,18 @@ gem 'font-awesome-rails', '~>4.x'
 gem 'bootstrap', '~> 4.4.1'
 gem 'popper_js', '~> 1.14.5'
 gem 'alertifyjs-rails'
+#gem 'jquery-turbolinks'
+gem 'coffee-rails'
+gem 'aws-sdk', '~> 2.0'
+gem 'gravatar_image_tag'
+gem 'active_storage_validations'
+gem 'aasm'
+
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4'
+
+gem 'simplemde'
+gem 'kramdown', '~> 2.1'
+gem 'sanitize'
 
 gem 'devise'

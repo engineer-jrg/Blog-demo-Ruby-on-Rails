@@ -1,17 +1,35 @@
-
 <!-- Default value -->
 <% article.title ||= "Demo-title" %>
 <% article.body ||= "Demo-Body" %>
 <!-- End default value -->
 
-<div class="container mt-3">
-    <div class="card mx-auto" style="width: 18rem;">
-        <div class="card-body">
-            <%= link_to article.title, article, class:"card-title h5" %>
-            <p class="card-text"><%= article.body %></p>
+<div class="card-body">
+    <%= link_to article.title, article, class:"card-title h3 text-dark text-decoration-none" %>
+    <small class="d-block">Author: <%= article.user.email %></small>
+    <small class="d-block">Visits: <%= article.visits_count %></small>
+    <small class="d-block">Categories: | 
+        <% article.categories.each do |category| %>
+            <span class="badge" style="background-color:<%= category.color %>;">
+            <%= link_to  category.name, category, class:"text-white text-decoration-none" %>
+            </span> | 
+        <% end %>
+    </small>
 
+    <% if article.cover.attached? %>
+        <%= image_tag url_for(article.thumbnail), class: "img-fluid rounded my-2" %>
+    <% else %>
+        <%= image_tag gravatar_image_url(article.user.email, size: 600) %>
+    <% end %>
+
+    <p class="card-text mb-2">
+        <%= Sanitize.fragment(Kramdown::Document.new(article.body).to_html, Sanitize::Config::RELAXED).html_safe %>
+    </p>
+    <% if user_signed_in? %>
+        <% if current_user.is_editor? && (article.user.id.equal? current_user.id) || current_user.is_admin? %>
             <%= link_to  "Edit", edit_article_path(article), class:"btn btn-primary", method: :get %>
-            <%= link_to  "Delete", article, class:"btn btn-danger", method: :delete %>
-        </div>
-    </div>
+        <% end %>
+        <% if current_user.is_admin? %>
+             | <%= link_to  "Delete", article, class:"btn btn-danger", method: :delete %>
+        <% end %>
+    <% end %>
 </div>

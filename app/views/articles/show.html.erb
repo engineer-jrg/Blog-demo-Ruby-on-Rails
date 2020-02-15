@@ -2,4 +2,27 @@
   Show Article
 <% end %>
 
-<%= render  "card_article", article: @article %>
+<div class="row">
+  <div class="col p-4">
+    <div class="card mx-auto">
+      <%= render  "card_article", article: @article %>
+      <div class="card-body mt-2">
+        <div class="row">
+          <div class="col col-md-10">
+            <h5>Comentario:</h5>
+            <%= render  "comments/form", article: @article, comment: @comment %>
+
+            <h5>Comentarios del post:</h5>
+            <ul id="comments-box">
+              <% @article.comments.each do |comment| %>
+                <li>
+                  <p><%= comment.body %> - <code class="badge badge-info"><%= comment.user.email %></code></p>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

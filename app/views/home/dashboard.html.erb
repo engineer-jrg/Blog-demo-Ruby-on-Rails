@@ -1,0 +1,59 @@
+<% content_for :title do %>
+Articles - admin
+<% end %>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ol class="breadcrumb mt-2">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item active">Articles</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col">
+        <div class="row">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @articles.each do |article| %>
+                    <tr>
+                        <th scope="row"><%= article.id %></th>
+                        <td><%= article.title %></td>
+                        <td><%= article.user.email %></td>
+                        <td>
+                            <span class="badge badge-<%= article.may_publish? ? "secondary" : "primary" %>">
+                                <%= article.state %>
+                            </span>
+                        </td>
+                        <td>
+                            <%= link_to "delete", article, class:  "btn btn-danger", method: :put %> |
+                            <% if article.may_publish? %>
+                            <%= link_to "publish", "/articles/#{article.id}/publish", class:  "btn btn-success", method: :put %>
+                            <% else %>
+                            <%= link_to "in draft", "/articles/#{article.id}/unpublish", class:  "btn btn-info", method: :put %>
+                            <% end %>
+                        </td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+        <div class="row m-4">
+            <div class="col">
+                <%= will_paginate @articles, list_classes: %w(pagination justify-content-center) %>
+            </div>
+        </div>
+    </div>
+</div>

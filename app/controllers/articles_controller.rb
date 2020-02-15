@@ -1,11 +1,21 @@
 class ArticlesController < ApplicationController
+    before_action :authenticate_user!, except: [:show, :index]
+    before_action :set_article, except: [:new, :index, :create]
+    before_action :authenticate_editor!, only: [:new, :create, :update, :edit]
+    before_action :authenticate_admin!, only: [:destroy, :publish]
+
     # GET /articles
     def index
-        @articles = Article.all
+        @articles = Article.paginate(page: params[:page], per_page: 6).publicados.ultimos
     end
     # GET /articles/:id
     def show
-        @article = Article.find(params[:id])
+        unless @article.may_unpublish?
+            flash[:notice] = 'Article with unpublished status'
+            return redirect_to articles_path
+        end
+        @article.update_visits_count
+        @comment = Comment.new
     end
     # GET /articles/new
     def new
@@ -13,7 +23,8 @@ class ArticlesController < ApplicationController
     end
     # POST /articles
     def create
-        @article = Article.new(article_params)
+        @article = current_user.articles.new(article_params)
+        @article.categories = params[:categories]
         if @article.valid?
             @article.save
             redirect_to @article
@@ -23,17 +34,18 @@ class ArticlesController < ApplicationController
     end
     # DELETE /articles/:id
     def destroy
-        @article = Article.find(params[:id])
         @article.destroy
         redirect_to articles_path
     end
-    # GET /articles/id/edit
+    # GET /articles/:id/edit
     def edit
-        @article = Article.find(params[:id])
+        unless !@article.user.id.equal? params[:id] && !current_user.is_admin?
+            flash[:notice] = 'The article can only be edited by the user who created it'
+            return redirect_to @article
+        end
     end
-
+    # PUT /articles/:id
     def update
-        @article = Article.find(params[:id])
         if @article.update(article_params)
             redirect_to @article
         else
@@ -41,9 +53,33 @@ class ArticlesController < ApplicationController
         end
     end
 
+    # PUT /articles/:id/publish
+    def publish
+        if @article.may_publish?
+            @article.publish!
+        end
+        redirect_to dashboard_path
+    end
+
+    # PUT /articles/:id/unpublish
+    def unpublish
+        if @article.may_unpublish?
+            @article.unpublish!
+        end
+        redirect_to dashboard_path
+    end
+
     private
 
     def article_params
-        params.require(:article).permit(:title, :body)
+        params.require(:article).permit(:title, :body, :cover, :categories) #, comment_attributes: [ :user_id, :article_id, :body ]
+    end
+
+    def validate_user
+        redirect_to new_user_session_path, notice: "To create an article you need to login"
+    end
+
+    def set_article
+        @article = Article.find(params[:id])
     end
 end

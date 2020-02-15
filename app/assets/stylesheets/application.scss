@@ -13,11 +13,29 @@
  * require_tree .
  * require_self
  */
+ @import "font-awesome";
 
  @import "bootstrap";
 
  @import "alertify";
  @import "alertify/default";
  @import "alertify/bootstrap";
+
+ @import "simplemde";
  
  @import "styles";
+
+ // Colores
+ $red: #f44336;
+ $red-darken-1: #e53935;
+
+
+ // Colores para textos
+
+.text-red {
+  color: #f44336 !important;
+}
+
+a.text-red:hover, a.text-red:focus {
+  color: $red-darken-1 !important;
+}
