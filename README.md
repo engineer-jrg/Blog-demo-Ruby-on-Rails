@@ -1,24 +1,29 @@
-# README
+# Blog demo desarrollador con Ruby on Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este proyecto se trata de un Blog demo desarrollado con Ruby on Rails (RoR), abarca los conceptos basicos de CRUD sobre un articulo.
 
-Things you may want to cover:
+Algunos de los temas tradados son:
 
-* Ruby version
+* CRUD de articulos
 
-* System dependencies
+* Nivel de permisos de usuario
 
-* Configuration
+* Active Storage para manipulacion de imagenes
 
-* Database creation
+* Base de datos postgres
 
-* Database initialization
+* Editor de texo personalizado
 
-* How to run the test suite
+* Deploy en servidor Heroku
 
-* Services (job queues, cache servers, search engines, etc.)
+Pasos para utilizar el proyecto:
 
-* Deployment instructions
+1. Instale una version de PostgreSQL 10 o superior.
+2. Instale Rails.
+3. Clone este repositorio desde GIT.
+4. Ejecute el comand: `bundle install` para actualizar dependencias.
+5. Ejecute `rails server` para lanzar el servidor.
 
-* ...
+Este proyecto esta basado en el tutorial de Ruby on Rails de [Codigo Facilito](https://codigofacilito.com/)
+
+Tambien puede encontrar una version demo de este proyecto alojada en [App Heroku](https://blog-ruby-rails.herokuapp.com/)
