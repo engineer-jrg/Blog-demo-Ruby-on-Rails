@@ -76,7 +76,7 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap4'
 
 gem 'simplemde'
-gem 'kramdown', '~> 2.1'
+gem 'kramdown', '~> 2.3'
 gem 'sanitize'
 
 gem 'devise'
